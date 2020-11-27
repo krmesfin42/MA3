@@ -54,7 +54,7 @@ class LinearHashTable<K, V> extends HashTableBase<K, V>
         int hash = super.getHash(key);
 
         // MA TODO: find empty slot to insert (update HashItem as necessary)
-        if (containsElement(key)) {
+        if (containsElement(key)) {//value will be replace when another item has the same key
 
             HashItem<K,V> hashI= new HashItem(key, value, false);
             _items.set(hash, hashI);
@@ -62,15 +62,15 @@ class LinearHashTable<K, V> extends HashTableBase<K, V>
 
             while (hash < _items.size()) {
 
-                //If the slot is empty, add the new hashItem to the slot
-                if (_items.elementAt(hash).isEmpty()) {
+
+                if (_items.elementAt(hash).isEmpty()) {//if slot empty new hasHI added to the slot
 
                     hashI= new HashItem(key, value, false);
                     _items.set(hash, hashI);
                     _number_of_elements++;
                     return;
                 }
-                    hash = (hash + 1) % _items.size();
+                    hash = (hash + 1) % _items.size();//go to next index
             }
 
         }
@@ -88,7 +88,7 @@ class LinearHashTable<K, V> extends HashTableBase<K, V>
 
         // MA TODO: find slot to remove. Remember to check for infinite loop!
         //  ALSO: Use lazy deletion - see structure of HashItem
-        if(_items.elementAt(hash).getKey() != key){
+        if(_items.elementAt(hash).getKey() != key){//check if there is inital hash
             int i = 0;
             while(i < _items.size()){
                 if(_items.elementAt(i).getKey() == key){
@@ -98,7 +98,7 @@ class LinearHashTable<K, V> extends HashTableBase<K, V>
             i++;
             }
         }
-        if(!(_items.elementAt(hash).isEmpty())){
+        if(!(_items.elementAt(hash).isEmpty())){//make item empty if its not
             HashItem<K,V> hashI2= new HashItem(null, null, true);
             _items.set(hash, hashI2);
             _number_of_elements--;
